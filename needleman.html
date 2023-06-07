@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    table {
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    th, td {
+      border: 1px solid black;
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: lightblue;
+    }
+    th:nth-child(n),td:nth-child(n) {
+    width:20px;
+    }
+   
+    td {
+      background-color: lightgrey;
+    }
+    #matrixTableCaption {
+      padding: 10px;
+      text-align: center;
+    }
+    .table-container {
+      display:flex;
+      justify-content: center;
+      margin-right:20px;
+    }
+  </style>
+</head>
+<body>
+  <input type="text" id="sequence1" name="sequence1"><br>
+  <input type="text" id="sequence2" name="sequence2"><br>
+  <button onclick="handle()">Click</button>
+  
+  <div id="myPlot" style="width:100%;max-width:700px"></div>
+  <div class="table-container">
+    <table id="matrixTable">
+      <caption id="matrixTableCaption">Score Table</caption>  
+    </table>
+  </div>
+       
+  <table id="firstRowColTable">
+    <caption>Diagonal Table</caption>
+  </table>
+  
+  <script>
+    // Clear existing tables
+    function clearTables() {
+      const matrixTable = document.getElementById("matrixTable");
+      const firstRowColTable = document.getElementById("firstRowColTable");
+      
+      while (matrixTable.firstChild) {
+        matrixTable.firstChild.remove();
+      }
+      
+      while (firstRowColTable.firstChild) {
+        firstRowColTable.firstChild.remove();
+      }
+    }
+  
+    // Check function for matching elements
+    function check(matrix, posx, posy) {
+      var dscore = 0;
+      var upos = matrix[posx - 1][posy];
+      var lpos = matrix[posx][posy - 1];
+      var dpos = matrix[posx - 1][posy - 1];
+      var cpos = matrix[posx][posy];
+      var prevpos;
+
+      if (matrix[posx][0] === matrix[0][posy]) {
+        dscore = dpos + 1;
+      } else {
+        dscore = dpos - 1;
+      }
+
+      const lscore = lpos - 2;
+      const uscore = upos - 2;
+      const maxpos = Math.max(lscore, uscore, dscore);
+      if (maxpos === lscore) {
+        prevpos = [posx, posy - 1];
+      }
+      if (maxpos === uscore) {
+        prevpos = [posx - 1, posy];
+      }
+      if (maxpos === dscore) {
+        prevpos = [posx - 1, posy - 1];
+      }
+      return [maxpos, prevpos];
+    }
+    
+    // Main code
+    function handle() {
+      clearTables(); // Clear existing tables
+
+      const A = document.getElementById("sequence1").value;
+      const B = document.getElementById("sequence2").value;
+      var xArray = A.split("");
+      var yArray = B.split("");
+
+      var matrix = [];
+
+      const h = yArray.length;
+      const v = xArray.length;
+
+      for (let i = 0; i < h + 2; i++) {
+        matrix[i] = [];
+        for (let j = 0; j < v + 2; j++) {
+          matrix[i][j] = 0;
+        }
+      }
+
+      for (let i = 0; i < h; i++) {
+        for (let j = 0; j < v; j++) {
+          if (i == 0) {
+            matrix[i][j + 2] = A[j];
+          }
+          if (j == 0) {
+            matrix[i + 2][j] = B[i];
+          }
+        }
+      }
+
+      for (let x = 1; x < h + 1; x++) {
+        for (let y = 1; y < v + 1; y++) {
+          if (x === 1) {
+            matrix[x][y + 1] = y * (-2);
+          }
+          if (y === 1) {
+            matrix[x + 1][y] = x * (-2);
+          }
+        }
+      }
+      var matrix2 = JSON.parse(JSON.stringify(matrix));
+
+      for (let x = 2; x < h + 2; x++) {
+        for (let y = 2; y < v + 2; y++) {
+          const [r1, r2] = check(matrix, x, y);
+          matrix[x][y] = r1;
+          matrix2[x][y] = r2;
+        }
+      }
+
+      // Display matrix as a table
+      const matrixTable = document.getElementById("matrixTable");
+      for (let i = 0; i < h + 2; i++) {
+        const row = document.createElement("tr");
+        for (let j = 0; j < v + 2; j++) {
+          const cell = document.createElement(i === 0 || j === 0 ? "th" : "td");
+          cell.textContent = matrix[i][j];
+          row.appendChild(cell);
+        }
+        matrixTable.appendChild(row);
+      }
+
+      const firstRowColTable = document.getElementById("firstRowColTable");
+      for (let i = 0; i < h + 2; i++) {
+        const row2 = document.createElement("tr");
+        for (let j = 0; j < v + 2; j++) {
+          const cell2 = document.createElement(i === 0 || j === 0 ? "th" : "td");
+
+          if (i >= 2 && j >= 2) {
+            const [r1, r2] = check(matrix, i, j);
+            if (r2[0] === r2[1] || r2[0] - i === r2[1] - j) {
+              cell2.textContent = "↖";
+            }
+            if (r2[0] === i) {
+              cell2.textContent = "←";
+            }
+            if (r2[1] === j) {
+              cell2.textContent = "↑";
+            }
+          }
+          if (i === 0 || j === 0) {
+            cell2.textContent = matrix2[i][j];
+          }
+          if (i === 1 && j > 1) {
+            cell2.textContent = "←";
+          }
+          if (j === 1 && i > 1) {
+            cell2.textContent = "↑";
+          }
+          if (i === 1 && j === 1) {
+            cell2.textContent = '.';
+          }
+          row2.appendChild(cell2);
+        }
+        firstRowColTable.appendChild(row2);
+      }
+
+      matrix2.length = 0;
+    }
+  </script>
+</body>
+</html>
+
