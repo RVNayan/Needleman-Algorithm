@@ -17,17 +17,11 @@
     th {
       background-color: lightblue;
     }
-    th:nth-child(n),td:nth-child(n) {
-    width:20px;
-    }
-   
+
     td {
       background-color: lightgrey;
     }
-    #matrixTableCaption {
-      padding: 10px;
-      text-align: center;
-    }
+
     .table-container {
       display:flex;
       justify-content: center;
@@ -36,21 +30,28 @@
   </style>
 </head>
 <body>
-  <input type="text" id="sequence1" name="sequence1"><br>
-  <input type="text" id="sequence2" name="sequence2"><br>
-  <button onclick="handle()">Click</button>
-  
-  <div id="myPlot" style="width:100%;max-width:700px"></div>
+  <div>
+    <h1 style="text-align: center;">Welcome</h1>
+    <input type="text" id="sequence1" name="sequence1" placeholder="Enter sequence 1"><br>
+    <input type="text" id="sequence2" name="sequence2" placeholder="Enter sequence 2"><br>
+    <button onclick="handle()">Click</button>
+    <p class="error-message" id="errorMessage"></p>
+  </div>
+
   <div class="table-container">
     <table id="matrixTable">
-      <caption id="matrixTableCaption">Score Table</caption>  
+      <caption id="matrixTableCaption">Score Table</caption>
     </table>
   </div>
-       
-  <table id="firstRowColTable">
-    <caption>Diagonal Table</caption>
-  </table>
+
+  <div class="table-container">
+    <table id="firstRowColTable">
+      <caption>Diagonal Table</caption>
+    </table>
+  </div>
   
+  <div id="myPlot" style="width:100%;max-width:700px"></div>
+
   <script>
     // Clear existing tables
     function clearTables() {
@@ -102,6 +103,16 @@
 
       const A = document.getElementById("sequence1").value;
       const B = document.getElementById("sequence2").value;
+      const err = document.getElementById("errorMessage");
+      
+      //error section
+      if (A === '' || B === '') {
+        err.textContent = "Please enter both sequences.";
+        return;
+      }
+
+      // Clear error message
+      errorMessage.textContent = '';
       var xArray = A.split("");
       var yArray = B.split("");
 
