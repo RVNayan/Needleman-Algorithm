@@ -3,67 +3,122 @@
 <head>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <style>
-    table {
+    .header {
+    font-size:50px;
+    text-align:center;
+    }
+    .border1 {
+    background-color: green;
+    height:200px;
+    }
+    
+    #intro {
+    position: relative;
+    top: 20px;
+    left:20px;
+    font-size:15px;
+    height: 100%;
+    width:50%;
+    color: white;
+    overflow: auto;
+    /*overflow-wrap: break-word;*/
+
+    }
+    #sequence1 {
+    position : absolute;
+    top: 125px;
+    right: 10%;
+    background-color: lightblue;
+    padding: 10px;
+    }
+    #sequence2 {
+    position : absolute;
+    top: 175px;
+    right: 10%;
+    background-color: lightgrey;
+    padding: 10px;
+    }
+    
+    #butt {
+    position : absolute;
+    top:220px;
+    right:25%;
+    border-radius: 10px 10px;
+    }
+    
+    .border2 {
+    background-color: black;
+    height:200px;
+    }
+    
+    .table-container {
+      display:flex;
+  
+      margin-right:20px;
+    }
+    .table1 {
       border-collapse: collapse;
       margin-bottom: 20px;
+    
     }
-
-    th, td {
-      border: 1px solid black;
+    .table1 th, .table1 td {
+      border: 1px dotted;
       padding: 10px;
       text-align: center;
     }
-
-    th {
-      background-color: lightblue;
-    }
-
-    td {
+    
+    .tabel1 td {
       background-color: lightgrey;
     }
 
-    .table-container {
-      display:flex;
-      justify-content: center;
-      margin-right:20px;
+    .table1 th {
+      background-color: lightblue;
     }
+    th:nth-child(n), td:nth-child(n) {
+    width:20px;
+    }
+   
+  
+    
+    
   </style>
 </head>
+
 <body>
-  <div>
-    <h1 style="text-align: center;">Welcome</h1>
-    <input type="text" id="sequence1" name="sequence1" placeholder="Enter sequence 1"><br>
-    <input type="text" id="sequence2" name="sequence2" placeholder="Enter sequence 2"><br>
-    <button onclick="handle()">Click</button>
-    <p class="error-message" id="errorMessage"></p>
-  </div>
-
-  <div class="table-container">
-    <table id="matrixTable">
-      <caption id="matrixTableCaption">Score Table</caption>
-    </table>
-  </div>
-
-  <div class="table-container">
-    <table id="firstRowColTable">
-      <caption>Diagonal Table</caption>
-    </table>
+  
+  <div class="border1"><header class="header"> Welcome </header><div>
+  <div class="border2">
+  <p id="intro"> The classical global pairwise alignment algorithm using dynamic programming is the Needleman–Wunsch algorithm.  In this algorithm, an optimal alignment is obtained over the entire lengths of the two sequences.  It must extend from the beginning to the end of both sequencs to achieve the highest total score. In other words, the alignment path has to go from the bottom right corner of the matrix to the top left corner. This strategy is only suitable for aligning two closely related sequences that are of the same length. </p>
+  <input type="text" id="sequence1" name="sequence1"><br>
+  <input type="text" id="sequence2" name="sequence2"><br>
+  <button onclick="handle()" id="butt">Click</button>
+    
   </div>
   
+  
   <div id="myPlot" style="width:100%;max-width:700px"></div>
-
+  <div class="table-container">
+    <table id="matrixtable1" class="table1">
+      <caption>Score Table</caption>  
+    </table>
+  </div>
+       
+  <table id="matrixtable2">
+    <caption>Diagonal Table</caption>
+  </table>
+ 
   <script>
     // Clear existing tables
     function clearTables() {
-      const matrixTable = document.getElementById("matrixTable");
-      const firstRowColTable = document.getElementById("firstRowColTable");
+      const matrixtable1 = document.getElementById("matrixtable1");
+      const matrixtable2 = document.getElementById("matrixtable2");
       
-      while (matrixTable.firstChild) {
-        matrixTable.firstChild.remove();
+      while (matrixtable1.firstChild) {
+        matrixtable1.firstChild.remove();
       }
       
-      while (firstRowColTable.firstChild) {
-        firstRowColTable.firstChild.remove();
+      while (matrixtable2.firstChild) {
+        matrixtable2.firstChild.remove();
       }
     }
   
@@ -103,16 +158,6 @@
 
       const A = document.getElementById("sequence1").value;
       const B = document.getElementById("sequence2").value;
-      const err = document.getElementById("errorMessage");
-      
-      //error section
-      if (A === '' || B === '') {
-        err.textContent = "Please enter both sequences.";
-        return;
-      }
-
-      // Clear error message
-      errorMessage.textContent = '';
       var xArray = A.split("");
       var yArray = B.split("");
 
@@ -160,7 +205,7 @@
       }
 
       // Display matrix as a table
-      const matrixTable = document.getElementById("matrixTable");
+      const matrixtable1 = document.getElementById("matrixtable1");
       for (let i = 0; i < h + 2; i++) {
         const row = document.createElement("tr");
         for (let j = 0; j < v + 2; j++) {
@@ -168,10 +213,10 @@
           cell.textContent = matrix[i][j];
           row.appendChild(cell);
         }
-        matrixTable.appendChild(row);
+        matrixtable1.appendChild(row);
       }
 
-      const firstRowColTable = document.getElementById("firstRowColTable");
+      const matrixtable2 = document.getElementById("matrixtable2");
       for (let i = 0; i < h + 2; i++) {
         const row2 = document.createElement("tr");
         for (let j = 0; j < v + 2; j++) {
@@ -203,7 +248,7 @@
           }
           row2.appendChild(cell2);
         }
-        firstRowColTable.appendChild(row2);
+        matrixtable2.appendChild(row2);
       }
 
       matrix2.length = 0;
@@ -211,4 +256,3 @@
   </script>
 </body>
 </html>
-
