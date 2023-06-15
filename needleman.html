@@ -5,11 +5,12 @@
   <style>
     .header {
     font-size:50px;
+    padding-top:10px;
     text-align:center;
     }
     .border1 {
     background-color: green;
-    height:200px;
+    height:100px;
     }
     
     #intro {
@@ -41,33 +42,40 @@
     
     #butt {
     position : absolute;
-    top:220px;
-    right:25%;
+    top: 250px;
+    right: 10%;
+    
     border-radius: 10px 10px;
+    font-size:15px;
     }
     
     .border2 {
     background-color: black;
     height:200px;
     }
-    
-    .table-container {
-      display:flex;
-  
-      margin-right:20px;
+
+    .left_block {
+      position: static;
+      height:500px; /*always give height on pxl */
+      width:100%;
+      background-color: grey;
     }
+    /*Tables*/
     .table1 {
       border-collapse: collapse;
-      margin-bottom: 20px;
+      top: 400px;
+      position: absolute;
+      left: 10%;
+      box-shadow: 10px 10px;
     
     }
     .table1 th, .table1 td {
-      border: 1px dotted;
+      border: 1px double;
       padding: 10px;
       text-align: center;
     }
     
-    .tabel1 td {
+    .table1 td {
       background-color: lightgrey;
     }
 
@@ -77,8 +85,34 @@
     th:nth-child(n), td:nth-child(n) {
     width:20px;
     }
-   
-  
+    /*table2 */
+    .table2 {
+      border-collapse: collapse;
+      top: 400px;
+      position: absolute;
+      right: 10%;
+      box-shadow: 10px 10px;
+      
+    
+    }
+    .table2 th, .table2 td {
+      border: 1px double;
+      padding: 10px;
+      text-align: center;
+    }
+    
+    .table2 td {
+      background-color: lightgrey;
+    }
+
+    .table2 th {
+      background-color: lightblue;
+    }
+    th:nth-child(n), td:nth-child(n) {
+    width:20px;
+    }
+    
+    .table1:hover, .table2:hover{ opacity:0.5;}
     
     
   </style>
@@ -86,27 +120,27 @@
 
 <body>
   
-  <div class="border1"><header class="header"> Welcome </header><div>
+  <div class="border1"><header class="header"> Needleman Sequence Analyzer </header><div>
   <div class="border2">
   <p id="intro"> The classical global pairwise alignment algorithm using dynamic programming is the Needleman–Wunsch algorithm.  In this algorithm, an optimal alignment is obtained over the entire lengths of the two sequences.  It must extend from the beginning to the end of both sequencs to achieve the highest total score. In other words, the alignment path has to go from the bottom right corner of the matrix to the top left corner. This strategy is only suitable for aligning two closely related sequences that are of the same length. </p>
-  <input type="text" id="sequence1" name="sequence1"><br>
-  <input type="text" id="sequence2" name="sequence2"><br>
-  <button onclick="handle()" id="butt">Click</button>
+  <input type="text" id="sequence1" name="sequence1" placeholder="sequence 1"><br>
+  <input type="text" id="sequence2" name="sequence2" placeholder="sequence 2"><br>
+</div>
+  <button onclick="handle()" id="butt">Go</button>
     
-  </div>
+  
   
   
   <div id="myPlot" style="width:100%;max-width:700px"></div>
-  <div class="table-container">
+    <div class ="left_block">
     <table id="matrixtable1" class="table1">
       <caption>Score Table</caption>  
     </table>
-  </div>
-       
-  <table id="matrixtable2">
+    
+  <table id="matrixtable2" class="table2">
     <caption>Diagonal Table</caption>
   </table>
- 
+</div>
   <script>
     // Clear existing tables
     function clearTables() {
