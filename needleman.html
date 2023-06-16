@@ -7,10 +7,13 @@
     font-size:50px;
     padding-top:10px;
     text-align:center;
+    
     }
     .border1 {
-    background-color: green;
+    background-image:linear-gradient(green,yellow); /*top */
     height:100px;
+    
+
     }
     
     #intro {
@@ -21,7 +24,9 @@
     height: 100%;
     width:50%;
     color: white;
-    overflow: auto;
+    -webkit-box-reflect: right 0px linear-gradient(to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.3));
+    /*overflow: auto;
+    word-break: keep-all;
     /*overflow-wrap: break-word;*/
 
     }
@@ -31,6 +36,7 @@
     right: 10%;
     background-color: lightblue;
     padding: 10px;
+    
     }
     #sequence2 {
     position : absolute;
@@ -45,6 +51,7 @@
     top: 250px;
     right: 10%;
     
+    
     border-radius: 10px 10px;
     font-size:15px;
     }
@@ -52,13 +59,14 @@
     .border2 {
     background-color: black;
     height:200px;
+    transition: height 1s;
     }
 
     .left_block {
       position: static;
       height:500px; /*always give height on pxl */
       width:100%;
-      background-color: grey;
+      background-image: linear-gradient(to right,red,blue);
     }
     /*Tables*/
     .table1 {
@@ -67,6 +75,8 @@
       position: absolute;
       left: 10%;
       box-shadow: 10px 10px;
+      transition: 0.5s;
+      -webkit-box-reflect: below 0px linear-gradient(to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.6)); /*reflection effects */
     
     }
     .table1 th, .table1 td {
@@ -92,6 +102,8 @@
       position: absolute;
       right: 10%;
       box-shadow: 10px 10px;
+      transition: 1s;
+      -webkit-box-reflect: below 0px linear-gradient(to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.6));
       
     
     }
@@ -112,9 +124,15 @@
     width:20px;
     }
     
-    .table1:hover, .table2:hover{ opacity:0.5;}
-    
-    
+    .table1:hover, .table2:hover, #butt:hover{ 
+        opacity:1; 
+        scale:120%; /* scales the size of the table */
+      }
+    /*.border2:hover{height:300px;} border animation */
+    #caps {
+      position:relative;
+      height:10px;
+    }
   </style>
 </head>
 
@@ -122,7 +140,7 @@
   
   <div class="border1"><header class="header"> Needleman Sequence Analyzer </header><div>
   <div class="border2">
-  <p id="intro"> The classical global pairwise alignment algorithm using dynamic programming is the Needleman–Wunsch algorithm.  In this algorithm, an optimal alignment is obtained over the entire lengths of the two sequences.  It must extend from the beginning to the end of both sequencs to achieve the highest total score. In other words, the alignment path has to go from the bottom right corner of the matrix to the top left corner. This strategy is only suitable for aligning two closely related sequences that are of the same length. </p>
+  <p id="intro"> The classical global pairwise alignment algorithm using dynamic programming is the Needleman–Wunsch algorithm.  In this algorithm, an optimal alignment is obtained over the entire lengths of the two sequences.  It must extend from the beginning to the end of both sequencs to achieve the highest total score. In other words, the alignment path has to go from the bottom right corner of the matrix to the top left corner. This strategy is only suitable for aligning two closely related sequences that are of the same length. Try it right now </p>
   <input type="text" id="sequence1" name="sequence1" placeholder="sequence 1"><br>
   <input type="text" id="sequence2" name="sequence2" placeholder="sequence 2"><br>
 </div>
@@ -134,11 +152,11 @@
   <div id="myPlot" style="width:100%;max-width:700px"></div>
     <div class ="left_block">
     <table id="matrixtable1" class="table1">
-      <caption>Score Table</caption>  
+      <caption id="caps">Score Table</caption>  
     </table>
     
   <table id="matrixtable2" class="table2">
-    <caption>Diagonal Table</caption>
+    <caption id = "caps">Diagonal Table</caption>
   </table>
 </div>
   <script>
