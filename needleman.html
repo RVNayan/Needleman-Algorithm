@@ -7,7 +7,6 @@
     font-size:50px;
     padding-top:10px;
     text-align:center;
-    
     }
     .border1 {
     background-image:linear-gradient(green,yellow); /*top */
@@ -79,6 +78,25 @@
       -webkit-box-reflect: below 0px linear-gradient(to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.6)); /*reflection effects */
     
     }
+    .table1::before { /*added pop up*/
+  content: attr(title);
+  position: absolute;
+  top: 50%;
+  left: 150%;
+  transform: translateX(-50%);
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.table1:hover::before {
+  opacity: 1;
+  visibility: visible;
+}
     .table1 th, .table1 td {
       border: 1px double;
       padding: 10px;
@@ -102,7 +120,7 @@
       position: absolute;
       right: 10%;
       box-shadow: 10px 10px;
-      transition: 1s;
+      transition: 0.5s;
       -webkit-box-reflect: below 0px linear-gradient(to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.6));
       
     
@@ -127,12 +145,18 @@
     .table1:hover, .table2:hover, #butt:hover{ 
         opacity:1; 
         scale:120%; /* scales the size of the table */
+  
+        visibility: visible;
+
       }
+
     /*.border2:hover{height:300px;} border animation */
     #caps {
       position:relative;
       height:10px;
     }
+    /*----------------*/
+    
   </style>
 </head>
 
@@ -148,11 +172,13 @@
     
   
   
-  
-  <div id="myPlot" style="width:100%;max-width:700px"></div>
     <div class ="left_block">
-    <table id="matrixtable1" class="table1">
+    <table id="matrixtable1" class="table1" title="table1">
       <caption id="caps">Score Table</caption>  
+      
+  
+      <div id="myPlot" style="width:100%;max-width:700px"></div>
+
     </table>
     
   <table id="matrixtable2" class="table2">
