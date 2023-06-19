@@ -31,7 +31,7 @@
     }
     #sequence1 {
     position : absolute;
-    top: 125px;
+    top: 115px;
     right: 10%;
     background-color: lightblue;
     padding: 10px;
@@ -39,7 +39,7 @@
     }
     #sequence2 {
     position : absolute;
-    top: 175px;
+    top: 165px;
     right: 10%;
     background-color: lightgrey;
     padding: 10px;
@@ -49,6 +49,16 @@
     position : absolute;
     top: 250px;
     right: 10%;
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-size: 10px;
     
     
     border-radius: 10px 10px;
@@ -56,14 +66,18 @@
     }
     
     .border2 {
-    background-color: black;
-    height:200px;
+
     transition: height 1s;
+    overflow-y: auto;
+    background: url(DNA.png);
+    -webkit-mask-image: linear-gradient(black);
+    mask-image: linear-gradient (black);
+    opacity: 0.95;
     }
 
     .left_block {
       position: static;
-      height:500px; /*always give height on pxl */
+      height:600px; /*always give height on pxl */
       width:100%;
       background-image: linear-gradient(to right,red,blue);
     }
@@ -79,18 +93,18 @@
     
     }
     .table1::before { /*added pop up*/
-  content: attr(title);
-  position: absolute;
-  top: 50%;
-  left: 150%;
-  transform: translateX(-50%);
-  padding: 10px;
-  background-color: #f9f9f9;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.5s ease-in-out;
+    content: attr(title);
+    position: absolute;
+    top: 50%;
+    left: 150%;
+    transform: translateX(-50%);
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease-in-out;
 }
 
 .table1:hover::before {
@@ -164,7 +178,8 @@
   
   <div class="border1"><header class="header"> Needleman Sequence Analyzer </header><div>
   <div class="border2">
-  <p id="intro"> The classical global pairwise alignment algorithm using dynamic programming is the Needleman–Wunsch algorithm.  In this algorithm, an optimal alignment is obtained over the entire lengths of the two sequences.  It must extend from the beginning to the end of both sequencs to achieve the highest total score. In other words, the alignment path has to go from the bottom right corner of the matrix to the top left corner. This strategy is only suitable for aligning two closely related sequences that are of the same length. Try it right now </p>
+  <p id="intro"> The classical global pairwise alignment algorithm using dynamic programming is the Needleman–Wunsch algorithm.  In this algorithm, an optimal alignment is obtained over the entire lengths of the two sequences.  It must extend from the beginning to the end of both sequencs to achieve the highest total score. In other words, the alignment path has to go from the bottom right corner of the matrix to the top left corner. This strategy is only suitable for aligning two closely related sequences that are of the same length. Try it right now 
+  </p>
   <input type="text" id="sequence1" name="sequence1" placeholder="sequence 1"><br>
   <input type="text" id="sequence2" name="sequence2" placeholder="sequence 2"><br>
 </div>
