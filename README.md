@@ -1,5 +1,5 @@
-# Needleman-Algorithm
-                                                            #HOW TO RUN
+## Needleman-Algorithm
+#HOW TO RUN
 fork this repo or just download the entire folder.
 You can try the python code which generates the raw table or just simply run the html file on you're computer if python isn't installed. Note that the output of html is well orgnaised/easy to use over the python code as it exists to serve as a backbone to the codes framework. 
 
