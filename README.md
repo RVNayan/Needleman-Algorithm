@@ -1,5 +1,6 @@
 ## Needleman-Algorithm
 
+Try it online! ![Link](https://needleman.netlify.app/)
 # HOW TO RUN?
 
 fork this repo or just download the entire folder.
